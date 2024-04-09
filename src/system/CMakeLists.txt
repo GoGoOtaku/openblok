@@ -55,7 +55,16 @@ target_include_directories(module_system PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/..
 
 # use SDL2
 target_compile_definitions(module_system PRIVATE OPENBLOK_DATADIR="${DATADIR}")
-target_link_libraries(module_system SDL2pp)
+if(USE_SYSTEM_LIBSDL2PP)
+    find_package(SDL2pp REQUIRED)
+    target_link_libraries(module_system SDL2pp::SDL2pp)
+    # Mainline libSDL2pp requires C++17 std::Optional template
+    set_target_properties(module_system PROPERTIES CXX_STANDARD 17)
+else()
+    target_link_libraries(module_system SDL2pp)
+    include(RequireCxx11)
+    require_cxx11_or_higher(module_system)
+endif()
 
 # GNU gettext
 if(ENABLE_LOCALES)
@@ -97,9 +106,7 @@ if(VITA)
 endif()
 
 include(EnableWarnings)
-include(RequireCxx11)
 enable_warnings(module_system)
-require_cxx11_or_higher(module_system)
 
 option(ENABLE_JPG "Enable JPG image support" ON)
 option(ENABLE_MP3 "Enable MP3 music support" ON)

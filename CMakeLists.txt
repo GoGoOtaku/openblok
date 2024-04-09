@@ -24,6 +24,9 @@ if(VITA)
     set(BUILD_TESTS OFF)
 endif()
 
+option(USE_SYSTEM_LIBSDL2PP "Use system instead of bundled libSDL2pp" OFF)
+option(USE_SYSTEM_UNITTESTCPP "Use system instead of bundled UnitTest++" OFF)
+
 # Intallation locations
 if(INSTALL_PORTABLE)
     set(EXEDIR "." CACHE STRING "Install location of the runtime executable")
