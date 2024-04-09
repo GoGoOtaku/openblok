@@ -27,6 +27,8 @@ endif()
 option(USE_SYSTEM_LIBSDL2PP "Use system instead of bundled libSDL2pp" OFF)
 option(USE_SYSTEM_UNITTESTCPP "Use system instead of bundled UnitTest++" OFF)
 
+option(BUILD_SHARED_LIBS "Build local libraries shared/dynamic" ON)
+
 # Intallation locations
 if(INSTALL_PORTABLE)
     set(EXEDIR "." CACHE STRING "Install location of the runtime executable")
