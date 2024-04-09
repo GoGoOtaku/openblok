@@ -15,7 +15,10 @@ set(TEST_H
 	# TestUtils.h
 )
 
-find_package(UnitTest++ REQUIRED)
+
+if(USE_SYSTEM_LIBSDL2PP)
+    find_package(UnitTest++ REQUIRED)
+endif()
 
 add_executable(openblok_test ${TEST_SRC} ${TEST_H})
 

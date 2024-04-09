@@ -7,6 +7,7 @@ else()
     set(SDL2PP_WITH_MIXER ON)
     set(SDL2PP_WITH_TTF ON)
     add_subdirectory(libSDL2pp)
+    SET_TARGET_PROPERTIES(SDL2pp PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 endif()
 
 # tinydir
