@@ -32,7 +32,7 @@ using DeviceID = int8_t;
 
 class InputEvent {
 public:
-#ifndef NDEBUG
+#ifdef OPENBLOK_TEST
     explicit InputEvent(InputType type, bool pressed, DeviceID source = -1);
 #else
     explicit InputEvent(InputType type, bool pressed, DeviceID source);

@@ -15,6 +15,8 @@ set(TEST_H
 	# TestUtils.h
 )
 
+find_package(UnitTest++ REQUIRED)
+
 add_executable(openblok_test ${TEST_SRC} ${TEST_H})
 
 target_link_libraries(openblok_test UnitTest++)
@@ -25,3 +27,6 @@ include(EnableWarnings)
 include(RequireCxx11)
 enable_warnings(openblok_test)
 require_cxx11_or_higher(openblok_test)
+
+add_test(NAME UnitTests COMMAND openblok_test)
+enable_testing()

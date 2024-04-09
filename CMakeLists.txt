@@ -1,13 +1,8 @@
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.26 FATAL_ERROR)
 project(openblok C CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 include(ProjectVersion)
-
-
-# Build options
-
-include(SetDefaultBuildType)
 
 # Portable install
 set(INSTALL_PORTABLE_DEFAULT OFF)
@@ -16,10 +11,17 @@ if(WIN32 OR CYGWIN OR VITA)
 endif()
 option(INSTALL_PORTABLE "The installation step should put the data directory next to the runtime" ${INSTALL_PORTABLE_DEFAULT})
 
-# Currently unit tests only work only in Debug
-if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "release" AND NOT VITA)
-    option(BUILD_TESTS "Build the unit tests" ON)
-    option(BUILD_TEST_COVERAGE "Build the test coverage report" OFF)
+# Tests init
+set(BUILD_TESTS_DEFAULT OFF)
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(BUILD_TESTS_DEFAULT ON)
+endif()
+option(BUILD_TESTS "Build the unit tests" ${BUILD_TESTS_DEFAULT})
+option(BUILD_TEST_COVERAGE "Build the test coverage report" OFF)
+
+# No tests for Vita
+if(VITA)
+    set(BUILD_TESTS OFF)
 endif()
 
 # Intallation locations
@@ -52,6 +54,10 @@ endif()
 
 # Global compiler settings
 
+if(BUILD_TESTS)
+    add_compile_definitions(OPENBLOK_TEST)
+endif()
+
 # Build coverage report if requested
 if(BUILD_TEST_COVERAGE)
     include(CodeCoverage)
@@ -65,8 +71,9 @@ add_subdirectory(thirdparty)
 # The main game source
 include_directories(src)
 add_subdirectory(src)
-if(CMAKE_BUILD_TYPE STREQUAL "debug" AND BUILD_TESTS)
+if(BUILD_TESTS)
     add_subdirectory(tests)
+    enable_testing()
 endif()
 
 

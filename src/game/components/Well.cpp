@@ -84,7 +84,7 @@ void Well::updateGameplayOnly(const std::vector<InputEvent>& events)
     lock_delay.update(*this);
 }
 
-#ifndef NDEBUG
+#ifdef OPENBLOK_TEST
 void Well::update(const std::vector<InputEvent>& events)
 {
     updateKeystateOnly(events);
@@ -469,7 +469,7 @@ void Well::notify(const WellEvent& event)
         obs(event);
 }
 
-#ifndef NDEBUG
+#ifdef OPENBLOK_TEST
 
 std::string Well::asAscii() const
 {

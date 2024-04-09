@@ -141,7 +141,7 @@ set(MOD_GAME_H
     util/Matrix.h
 )
 
-if(CMAKE_BUILD_TYPE STREQUAL "debug")
+if(BUILD_TESTS)
     list(APPEND MOD_GAME_SRC components/well/Ascii.cpp)
     list(APPEND MOD_GAME_H components/well/Ascii.h)
 endif()

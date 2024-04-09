@@ -23,7 +23,7 @@ public:
 
     static RGBColor color(PieceType);
 
-#ifndef NDEBUG
+#ifdef OPENBLOK_TEST
     static void loadDummyMinos();
 #endif
 
